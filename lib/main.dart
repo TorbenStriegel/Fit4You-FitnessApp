@@ -64,9 +64,20 @@ class _ExerciseName extends State<ExerciseGenerator> {
       trailing: Icon(Icons.abc),
       onTap: () {
         setState(() {
-          _exerciseNames.sort();
+          _addexercise();
         });
       },
+    );
+  }
+  void _addexercise () {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (BuildContext context) {
+        return Scaffold (
+          appBar: AppBar (
+            title: Text("Add Exercise"),
+          ),
+        );
+      }),
     );
   }
 }
