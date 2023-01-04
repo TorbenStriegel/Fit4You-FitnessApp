@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -40,7 +42,7 @@ class _ExerciseName extends State<ExerciseGenerator> {
       ),
       body:   Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text("data"),Flexible(child: _buildBody())],
+        children: [Text("data"),Flexible(child: _buildBody()),TextButton(onPressed: () {_addexercise();}, child: Text ("Add Exercise"))],
       )
     );
   }
