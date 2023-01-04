@@ -40,7 +40,10 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
             Flexible(child: _buildPersonalExercisesList()),
             TextButton(
                 onPressed: () {
-                  _addExercise();
+                  setState(() {
+
+                    _addExercise();
+                  });
                 },
                 child: Text("Add Exercise"))
           ],
@@ -72,12 +75,17 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     );
   }
 
-  void _addExercise() {
+
+  _addExercise() async {
     print("Test" + _exercisePersonal.toString());
-    Navigator.push(
+    final result =  Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
                 SecondPage(exercisePersonal: _exercisePersonal)));
+    print (result);
+
+    _exercisePersonal = await result;
+
   }
 }

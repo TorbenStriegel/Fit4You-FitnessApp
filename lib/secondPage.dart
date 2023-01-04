@@ -34,7 +34,7 @@ class _SecondPageState extends State<SecondPage> {
         title: Text("Add Exercises"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => Navigator.pop(context, exercisePersonal),
         ),
       ),
       body: _buildListToAddExercises(),
