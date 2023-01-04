@@ -1,7 +1,5 @@
-import 'dart:html';
-
-import 'package:flutter/material.dart';
 import 'package:fit4you/secondPage.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +15,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
         ),
         home: firstPageExerciseGenerator());
-
   }
 }
 
@@ -26,20 +23,9 @@ class firstPageExerciseGenerator extends StatefulWidget {
   State<StatefulWidget> createState() => _ExerciseName();
 }
 
-
-
 class _ExerciseName extends State<firstPageExerciseGenerator> {
   List<String> _exercisePersonal = <String>[];
-  List<String> _exerciseAll = <String>[
-    "Übung1",
-    "Übung2",
-    "Übung3",
-    "Übung4",
-    "Übung5",
-    "letzte Übung",
-  ];
   bool isChecked = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +38,13 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           children: [
             Text("data"),
             Flexible(child: _buildPersonalExercisesList()),
-            TextButton(onPressed: () {
-              _addExercise();
-            },
+            TextButton(
+                onPressed: () {
+                  _addExercise();
+                },
                 child: Text("Add Exercise"))
           ],
-        )
-    );
+        ));
   }
 
   Widget _buildPersonalExercisesList() {
@@ -87,12 +73,11 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
   }
 
   void _addExercise() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return const SecondPage(title: 'SecondPage');
-    }));
+    print("Test" + _exercisePersonal.toString());
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                SecondPage(exercisePersonal: _exercisePersonal)));
   }
-
 }
-
-
-
