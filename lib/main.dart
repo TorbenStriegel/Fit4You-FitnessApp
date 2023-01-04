@@ -38,7 +38,10 @@ class _ExerciseName extends State<ExerciseGenerator> {
       appBar: AppBar(
         title: Text('Fit4You'),
       ),
-      body: _buildBody(),
+      body:   Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text("data"),Flexible(child: _buildBody())],
+      )
     );
   }
 
@@ -67,3 +70,4 @@ class _ExerciseName extends State<ExerciseGenerator> {
     );
   }
 }
+
