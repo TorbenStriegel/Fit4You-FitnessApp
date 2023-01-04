@@ -34,6 +34,9 @@ class _ExerciseName extends State<ExerciseGenerator> {
     "Übung5",
     "letzte Übung",
   ];
+  bool isChecked = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +80,7 @@ class _ExerciseName extends State<ExerciseGenerator> {
 
   Widget _buildListToAddExercises() {
     List<String> _exerciseAllCopy = [..._exerciseAll];
-    _exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
+    //_exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
     return ListView.builder(
       itemCount: _exerciseAllCopy.length * 2,
       padding: EdgeInsets.all(16),
@@ -91,12 +94,17 @@ class _ExerciseName extends State<ExerciseGenerator> {
   }
 
   Widget _buildRowToAddExercises(String exercise) {
+    bool isInPersonalExerciseList = _exercisePersonal.contains(exercise);
     return ListTile(
       title: Text(exercise),
-      trailing: Icon(Icons.abc),
+      trailing: Icon(
+          isInPersonalExerciseList || isChecked ? Icons.check_box : Icons.check_box_outline_blank,
+          color: Colors.black),
       onTap: () {
         setState(() {
+          isChecked = true;
           _exercisePersonal.add(exercise);
+
         });
       },
     );
