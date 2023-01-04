@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:fit4you/secondPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,16 +16,19 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),
-        home: ExerciseGenerator());
+        home: firstPageExerciseGenerator());
+
   }
 }
 
-class ExerciseGenerator extends StatefulWidget {
+class firstPageExerciseGenerator extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ExerciseName();
 }
 
-class _ExerciseName extends State<ExerciseGenerator> {
+
+
+class _ExerciseName extends State<firstPageExerciseGenerator> {
   List<String> _exercisePersonal = <String>[];
   List<String> _exerciseAll = <String>[
     "Übung1",
@@ -37,19 +41,23 @@ class _ExerciseName extends State<ExerciseGenerator> {
   bool isChecked = false;
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Fit4You'),
-      ),
-      body:   Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text("data"),Flexible(child: _buildPersonalExercisesList()),
-          TextButton(onPressed: () {_addExercise();},
-              child: Text ("Add Exercise"))],
-      )
+        appBar: AppBar(
+          title: Text('Fit4You'),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("data"),
+            Flexible(child: _buildPersonalExercisesList()),
+            TextButton(onPressed: () {
+              _addExercise();
+            },
+                child: Text("Add Exercise"))
+          ],
+        )
     );
   }
 
@@ -72,54 +80,19 @@ class _ExerciseName extends State<ExerciseGenerator> {
       trailing: Icon(Icons.abc),
       onTap: () {
         setState(() {
-          //_addexercise(_exercisePersonal);
+          _addExercise();
         });
       },
     );
   }
 
-  Widget _buildListToAddExercises() {
-    List<String> _exerciseAllCopy = [..._exerciseAll];
-    //_exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
-    return ListView.builder(
-      itemCount: _exerciseAllCopy.length * 2,
-      padding: EdgeInsets.all(16),
-      itemBuilder: (context, i) {
-        if (i.isOdd) {
-          return Divider();
-        }
-        return _buildRowToAddExercises(_exerciseAllCopy[i ~/ 2]);
-      },
-    );
-  }
-
-  Widget _buildRowToAddExercises(String exercise) {
-    bool isInPersonalExerciseList = _exercisePersonal.contains(exercise);
-    return ListTile(
-      title: Text(exercise),
-      trailing: Icon(
-          isInPersonalExerciseList || isChecked ? Icons.check_box : Icons.check_box_outline_blank,
-          color: Colors.black),
-      onTap: () {
-        setState(() {
-          isChecked = true;
-          _exercisePersonal.add(exercise);
-
-        });
-      },
-    );
-  }
   void _addExercise() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (BuildContext context) {
-        return Scaffold (
-          appBar: AppBar (
-            title: Text("Add Exercise"),
-          ),
-          body: _buildListToAddExercises(),
-        );
-      }),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return const SecondPage(title: 'SecondPage');
+    }));
   }
+
 }
+
+
 
