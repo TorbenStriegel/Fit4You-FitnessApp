@@ -1,19 +1,17 @@
+import 'package:fit4you/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatefulWidget {
-  List<String> exercisePersonal;
 
-  SecondPage({required List<String> this.exercisePersonal});
 
   @override
   State<StatefulWidget> createState() {
-    return _SecondPageState(exercisePersonal);
+    return _SecondPageState();
   }
 }
 
 class _SecondPageState extends State<SecondPage> {
-  List<String> exercisePersonal;
   List<String> _exerciseAll = <String>[
     "Übung1",
     "Übung2",
@@ -25,8 +23,6 @@ class _SecondPageState extends State<SecondPage> {
   bool isChecked = false;
 
 
-  _SecondPageState(this.exercisePersonal);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +30,13 @@ class _SecondPageState extends State<SecondPage> {
         title: Text("Add Exercises"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: _buildListToAddExercises(),
     );
   }
+
   Widget _buildListToAddExercises() {
     List<String> _exerciseAllCopy = [..._exerciseAll];
     //_exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
@@ -54,23 +51,28 @@ class _SecondPageState extends State<SecondPage> {
       },
     );
   }
+
   Widget _checkbox(bool isInPersonalExerciseList) {
-    return Checkbox (value: isInPersonalExerciseList, onChanged:(value) => { value = !isInPersonalExerciseList, print(value)});
+    return Checkbox(value: isInPersonalExerciseList,
+        onChanged: (value) =>
+        {
+          value = !isInPersonalExerciseList,
+          print(value)
+        });
   }
 
   Widget _buildRowToAddExercises(String exercise) {
-    bool isInPersonalExerciseList = exercisePersonal.contains(exercise);
+    final _exercisePersonal = context
+        .dependOnInheritedWidgetOfExactType<Configuration>()!
+        .exercisePersonal;
+    bool isInPersonalExerciseList = _exercisePersonal.contains(exercise);
     return ListTile(
       title: Text(exercise),
       trailing: _checkbox(isInPersonalExerciseList),
-
-      /* Icon(
-          isInPersonalExerciseList || isChecked ? Icons.check_box : Icons.check_box_outline_blank,
-          color: Colors.black), */
       onTap: () {
         setState(() {
           _checkbox(true);
-          exercisePersonal.add(exercise);
+          _exercisePersonal.add(exercise);
         });
       },
     );

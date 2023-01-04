@@ -1,3 +1,4 @@
+import 'package:fit4you/config.dart';
 import 'package:fit4you/secondPage.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool test = true;
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home: firstPageExerciseGenerator());
+    return Configuration(
+      exercisePersonal: [],
+      child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+          ),
+          home: firstPageExerciseGenerator()),
+    );
   }
 }
 
@@ -24,7 +28,6 @@ class firstPageExerciseGenerator extends StatefulWidget {
 }
 
 class _ExerciseName extends State<firstPageExerciseGenerator> {
-  List<String> _exercisePersonal = <String>[];
   bool isChecked = false;
 
   @override
@@ -48,6 +51,9 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
   }
 
   Widget _buildPersonalExercisesList() {
+    final _exercisePersonal = context
+        .dependOnInheritedWidgetOfExactType<Configuration>()!
+        .exercisePersonal;
     return ListView.builder(
       itemCount: _exercisePersonal.length * 2,
       padding: EdgeInsets.all(16),
@@ -65,19 +71,14 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
       title: Text(exercisePersonal),
       trailing: Icon(Icons.abc),
       onTap: () {
-        setState(() {
-          _addExercise();
-        });
+        _addExercise();
       },
     );
   }
 
   void _addExercise() {
-    print("Test" + _exercisePersonal.toString());
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                SecondPage(exercisePersonal: _exercisePersonal)));
+            context, MaterialPageRoute(builder: (context) => SecondPage()))
+        .then((value) => setState(() {}));
   }
 }
