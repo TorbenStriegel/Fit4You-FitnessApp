@@ -25,12 +25,13 @@ class ExerciseGenerator extends StatefulWidget {
 }
 
 class _ExerciseName extends State<ExerciseGenerator> {
-  List<String> _exerciseNames = <String>[
+  List<String> _exercisePersonal = <String>[];
+  List<String> _exerciseAll = <String>[
     "Übung1",
     "Übung2",
     "Übung3",
-    "Übung1",
-    "Übung1",
+    "Übung4",
+    "Übung5",
     "letzte Übung",
   ];
 
@@ -42,42 +43,72 @@ class _ExerciseName extends State<ExerciseGenerator> {
       ),
       body:   Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text("data"),Flexible(child: _buildBody()),TextButton(onPressed: () {_addexercise();}, child: Text ("Add Exercise"))],
+        children: [Text("data"),Flexible(child: _buildPersonalExercisesList()),
+          TextButton(onPressed: () {_addExercise();},
+              child: Text ("Add Exercise"))],
       )
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildPersonalExercisesList() {
     return ListView.builder(
-      itemCount: _exerciseNames.length * 2,
+      itemCount: _exercisePersonal.length * 2,
       padding: EdgeInsets.all(16),
       itemBuilder: (context, i) {
         if (i.isOdd) {
           return Divider();
         }
-        return _buildRow(_exerciseNames[i ~/ 2]);
+        return _buildRowPersonalExercises(_exercisePersonal[i ~/ 2]);
       },
     );
   }
 
-  Widget _buildRow(String exerciseName) {
+  Widget _buildRowPersonalExercises(String exercisePersonal) {
     return ListTile(
-      title: Text(exerciseName),
+      title: Text(exercisePersonal),
       trailing: Icon(Icons.abc),
       onTap: () {
         setState(() {
-          _addexercise();
+          //_addexercise(_exercisePersonal);
         });
       },
     );
   }
-  void _addexercise () {
+
+  Widget _buildListToAddExercises() {
+    List<String> _exerciseAllCopy = [..._exerciseAll];
+    _exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
+    return ListView.builder(
+      itemCount: _exerciseAllCopy.length * 2,
+      padding: EdgeInsets.all(16),
+      itemBuilder: (context, i) {
+        if (i.isOdd) {
+          return Divider();
+        }
+        return _buildRowToAddExercises(_exerciseAllCopy[i ~/ 2]);
+      },
+    );
+  }
+
+  Widget _buildRowToAddExercises(String exercise) {
+    return ListTile(
+      title: Text(exercise),
+      trailing: Icon(Icons.abc),
+      onTap: () {
+        setState(() {
+          _exercisePersonal.add(exercise);
+        });
+      },
+    );
+  }
+  void _addExercise() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (BuildContext context) {
         return Scaffold (
           appBar: AppBar (
             title: Text("Add Exercise"),
           ),
+          body: _buildListToAddExercises(),
         );
       }),
     );
