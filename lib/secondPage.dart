@@ -71,8 +71,13 @@ class _SecondPageState extends State<SecondPage> {
       trailing: _checkbox(isInPersonalExerciseList),
       onTap: () {
         setState(() {
-          _checkbox(true);
-          _exercisePersonal.add(exercise);
+          if (isInPersonalExerciseList) {
+            _exercisePersonal.remove(exercise);
+            _checkbox(false);
+          } else {
+            _exercisePersonal.add(exercise);
+            _checkbox(true);
+          }
         });
       },
     );

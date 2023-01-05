@@ -9,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool test = true;
     return Configuration(
       exercisePersonal: [],
       child: MaterialApp(
@@ -69,10 +68,6 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
   Widget _buildRowPersonalExercises(String exercisePersonal) {
     return ListTile(
       title: Text(exercisePersonal),
-      trailing: Icon(Icons.abc),
-      onTap: () {
-        _addExercise();
-      },
     );
   }
 
