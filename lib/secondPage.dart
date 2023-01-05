@@ -135,8 +135,17 @@ class _SecondPageState extends State<SecondPage> {
           setState(() {
             if (isInPersonalExerciseList) {
               _exercisePersonal.remove(exercise);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
+                content:
+                    Text("removed " + exercise + " from your training plan"),
+              ));
             } else {
               _exercisePersonal.add(exercise);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
+                content: Text("added " + exercise + " to your training plan"),
+              ));
             }
           });
         });
@@ -153,9 +162,17 @@ class _SecondPageState extends State<SecondPage> {
       onTap: () {
         setState(() {
           if (isInPersonalExerciseList) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Text("removed " + exercise + " from your training plan"),
+            ));
             _exercisePersonal.remove(exercise);
             _checkbox(false, exercise);
           } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Text("added " + exercise + " to your training plan"),
+            ));
             _exercisePersonal.add(exercise);
             _checkbox(true, exercise);
           }

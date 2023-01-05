@@ -29,16 +29,31 @@ class _AppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.sort_by_alpha_sharp),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
+                content: Text("Cooming Soon"),
+              ));
+            },
+            icon: Icon(Icons.person_pin),
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.sort_by_alpha_sharp),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
+                content: Text("Cooming Soon"),
+              ));
+            },
+            icon: Icon(Icons.accessibility),
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.sort_by_alpha_sharp),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
+                content: Text("Cooming Soon"),
+              ));
+            },
+            icon: Icon(Icons.person),
           ),
         ],
       ),
@@ -105,8 +120,13 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
 
   Widget _buildRowPersonalExercises(String exercisePersonal) {
     return ListTile(
-      title: Text(exercisePersonal),
-    );
+        title: Text(exercisePersonal),
+        onLongPress: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 1),
+            content: Text("Cooming Soon"),
+          ));
+        });
   }
 
   void _addExercise() {
