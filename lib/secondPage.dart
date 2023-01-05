@@ -103,10 +103,23 @@ class _SecondPageState extends State<SecondPage> {
     );
   }
 
-  Widget _checkbox(bool isInPersonalExerciseList) {
-    return Checkbox(
-        value: isInPersonalExerciseList,
-        onChanged: (value) => {value = !isInPersonalExerciseList});
+  Widget _checkbox(bool isInPersonalExerciseList, String exercise) {
+    final _exercisePersonal = context
+        .dependOnInheritedWidgetOfExactType<Configuration>()!
+        .exercisePersonal;
+    return Checkbox(value: isInPersonalExerciseList,
+        onChanged: (value) {
+          value = isInPersonalExerciseList;
+          setState(() {
+            if (isInPersonalExerciseList) {
+              _exercisePersonal.remove(exercise);
+
+            } else {
+              _exercisePersonal.add(exercise);
+            }
+
+        });
+    });
   }
 
   Widget _buildRowToAddExercises(String exercise) {
@@ -116,15 +129,15 @@ class _SecondPageState extends State<SecondPage> {
     bool isInPersonalExerciseList = _exercisePersonal.contains(exercise);
     return ListTile(
       title: Text(exercise),
-      trailing: _checkbox(isInPersonalExerciseList),
+      trailing: _checkbox(isInPersonalExerciseList, exercise),
       onTap: () {
         setState(() {
           if (isInPersonalExerciseList) {
             _exercisePersonal.remove(exercise);
-            _checkbox(false);
+            _checkbox(false, exercise);
           } else {
             _exercisePersonal.add(exercise);
-            _checkbox(true);
+            _checkbox(true, exercise);
           }
         });
       },
