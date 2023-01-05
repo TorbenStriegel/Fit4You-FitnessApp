@@ -21,6 +21,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class _AppBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.sort_by_alpha_sharp),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.sort_by_alpha_sharp),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.sort_by_alpha_sharp),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class firstPageExerciseGenerator extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ExerciseName();
@@ -32,29 +57,34 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(textScaleFactor: 1.6,'Fit4You'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(textScaleFactor: 1.8,"Your training plan"),
-              Flexible(child: _buildPersonalExercisesList()),
+      appBar: AppBar(
+        title: Text(textScaleFactor: 1.6, 'Fit4You'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(textScaleFactor: 1.8, "Your training plan"),
+            Flexible(child: _buildPersonalExercisesList()),
             OutlinedButton(
               onPressed: () {
                 _addExercise();
               },
               style: ButtonStyle(
-                side:MaterialStateProperty.all(BorderSide(width: 1.5,color: Colors.blue)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                )),
-                child: Text(textScaleFactor: 1.2,"edit exercises"),
+                  side: MaterialStateProperty.all(
+                      BorderSide(width: 1.5, color: Colors.blue)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                  )),
+              child: Text(textScaleFactor: 1.2, "edit exercises"),
             ),
-            ],
-          ),
-        ));
+          ],
+        ),
+      ),
+      bottomNavigationBar: _AppBar(),
+    );
   }
 
   Widget _buildPersonalExercisesList() {

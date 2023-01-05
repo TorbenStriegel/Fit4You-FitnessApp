@@ -13,13 +13,14 @@ class _SecondPageState extends State<SecondPage> {
   bool showCheckedExercises = true;
   bool sortABC = false;
   List<String> _exerciseAll = <String>[
-    "zzzzz",
-    "Übung1",
-    "Übung2",
-    "Übung4",
-    "Übung3",
-    "Übung5",
-    "letzte Übung",
+    "Lunges",
+    "Squats",
+    "Crunches",
+    "Pushups",
+    "Deadlifts",
+    "Sit-Ups",
+    "Shrugs",
+    "Hip Thrusts",
   ];
   bool isChecked = false;
 
@@ -64,14 +65,17 @@ class _SecondPageState extends State<SecondPage> {
                         if (!sortABC) {
                           sortABC = true;
                           _exerciseAll.sort(
-                              (a, b) => a.toString().compareTo(b.toString()));
+                                  (a, b) =>
+                                  a.toString().compareTo(b.toString()));
                         } else {
                           sortABC = false;
                           _exerciseAll.sort(
-                              (b, a) => a.toString().compareTo(b.toString()));
+                                  (b, a) =>
+                                  a.toString().compareTo(b.toString()));
                         }
                       });
                     },
+
                     icon: Icon(Icons.sort_by_alpha_sharp),
                   ),
                 ],
@@ -90,7 +94,7 @@ class _SecondPageState extends State<SecondPage> {
     showCheckedExercises
         ? null
         : _exerciseAllCopy
-            .removeWhere((item) => _exercisePersonal.contains(item));
+        .removeWhere((item) => _exercisePersonal.contains(item));
     return ListView.builder(
       itemCount: _exerciseAllCopy.length * 2,
       padding: EdgeInsets.all(16),
@@ -107,19 +111,18 @@ class _SecondPageState extends State<SecondPage> {
     final _exercisePersonal = context
         .dependOnInheritedWidgetOfExactType<Configuration>()!
         .exercisePersonal;
-    return Checkbox(value: isInPersonalExerciseList,
+    return Checkbox(
+        value: isInPersonalExerciseList,
         onChanged: (value) {
           value = isInPersonalExerciseList;
           setState(() {
             if (isInPersonalExerciseList) {
               _exercisePersonal.remove(exercise);
-
             } else {
               _exercisePersonal.add(exercise);
             }
-
+          });
         });
-    });
   }
 
   Widget _buildRowToAddExercises(String exercise) {
