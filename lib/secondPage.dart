@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatefulWidget {
-
-
   @override
   State<StatefulWidget> createState() {
     return _SecondPageState();
@@ -12,34 +10,87 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
+  bool showCheckedExercises = true;
+  bool sortABC = false;
   List<String> _exerciseAll = <String>[
+    "zzzzz",
     "Übung1",
     "Übung2",
-    "Übung3",
     "Übung4",
+    "Übung3",
     "Übung5",
     "letzte Übung",
   ];
   bool isChecked = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Exercises"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+          title: Text("Edit Exercises"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
-      ),
-      body: _buildListToAddExercises(),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        showCheckedExercises = !showCheckedExercises;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                    ),
+                    icon: Icon(
+                      showCheckedExercises
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      size: 24.0,
+                    ),
+                    label: Text('Checked Exercises'),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (!sortABC) {
+                          sortABC = true;
+                          _exerciseAll.sort(
+                              (a, b) => a.toString().compareTo(b.toString()));
+                        } else {
+                          sortABC = false;
+                          _exerciseAll.sort(
+                              (b, a) => a.toString().compareTo(b.toString()));
+                        }
+                      });
+                    },
+                    icon: Icon(Icons.sort_by_alpha_sharp),
+                  ),
+                ],
+              ),
+              Flexible(child: _buildListToAddExercises())
+            ],
+          ),
+        ));
   }
 
   Widget _buildListToAddExercises() {
+    final _exercisePersonal = context
+        .dependOnInheritedWidgetOfExactType<Configuration>()!
+        .exercisePersonal;
     List<String> _exerciseAllCopy = [..._exerciseAll];
-    //_exerciseAllCopy.removeWhere((item) => _exercisePersonal.contains(item));
+    showCheckedExercises
+        ? null
+        : _exerciseAllCopy
+            .removeWhere((item) => _exercisePersonal.contains(item));
     return ListView.builder(
       itemCount: _exerciseAllCopy.length * 2,
       padding: EdgeInsets.all(16),
@@ -53,12 +104,9 @@ class _SecondPageState extends State<SecondPage> {
   }
 
   Widget _checkbox(bool isInPersonalExerciseList) {
-    return Checkbox(value: isInPersonalExerciseList,
-        onChanged: (value) =>
-        {
-          value = !isInPersonalExerciseList,
-          print(value)
-        });
+    return Checkbox(
+        value: isInPersonalExerciseList,
+        onChanged: (value) => {value = !isInPersonalExerciseList});
   }
 
   Widget _buildRowToAddExercises(String exercise) {
