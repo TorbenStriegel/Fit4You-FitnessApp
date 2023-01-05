@@ -18,10 +18,20 @@ class _SecondPageState extends State<SecondPage> {
     "Squats",
     "Crunches",
     "Pushups",
+    "Mountain Climbers",
+    "Squat",
+    "Burpee",
     "Deadlifts",
     "Sit-Ups",
     "Shrugs",
+    "Side planks",
     "Hip Thrusts",
+    "Dumbbell Pullover",
+    "Shoulder Press",
+    "Bench Press",
+    "Bench Press",
+    "Biceps Curl",
+    "Clean and Jerk",
   ];
   bool isChecked = false;
 
