@@ -11,6 +11,7 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   bool showCheckedExercises = true;
+  String query = "";
   bool sortABC = false;
   List<String> _exerciseAll = <String>[
     "Lunges",
@@ -39,6 +40,21 @@ class _SecondPageState extends State<SecondPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              TextField(
+                //controller: controller,
+                decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'Excercise',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Colors.blue))),
+
+                onChanged: (value) {
+                  setState(() {
+                    query = value;
+                  });
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -65,17 +81,14 @@ class _SecondPageState extends State<SecondPage> {
                         if (!sortABC) {
                           sortABC = true;
                           _exerciseAll.sort(
-                                  (a, b) =>
-                                  a.toString().compareTo(b.toString()));
+                              (a, b) => a.toString().compareTo(b.toString()));
                         } else {
                           sortABC = false;
                           _exerciseAll.sort(
-                                  (b, a) =>
-                                  a.toString().compareTo(b.toString()));
+                              (b, a) => a.toString().compareTo(b.toString()));
                         }
                       });
                     },
-
                     icon: Icon(Icons.sort_by_alpha_sharp),
                   ),
                 ],
@@ -94,7 +107,11 @@ class _SecondPageState extends State<SecondPage> {
     showCheckedExercises
         ? null
         : _exerciseAllCopy
-        .removeWhere((item) => _exercisePersonal.contains(item));
+            .removeWhere((item) => _exercisePersonal.contains(item));
+    if (query != "") {
+      _exerciseAllCopy.removeWhere(
+          (exercise) => !exercise.toLowerCase().contains(query.toLowerCase()));
+    }
     return ListView.builder(
       itemCount: _exerciseAllCopy.length * 2,
       padding: EdgeInsets.all(16),
