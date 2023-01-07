@@ -1,6 +1,7 @@
 import 'package:fit4you/config.dart';
 import 'package:fit4you/secondPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -120,14 +121,46 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
   }
 
   Widget _buildRowPersonalExercises(String exercisePersonal) {
-    return ListTile(
+    /*return ListTile(
         title: Text(exercisePersonal),
         onLongPress: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: const Duration(seconds: 1),
             content: Text("Cooming Soon"),
           ));
-        });
+        });*/
+    final _exercisePersonal = context
+        .dependOnInheritedWidgetOfExactType<Configuration>()!
+        .exercisePersonal;
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      secondaryActions: [
+        IconSlideAction(
+          caption: "Delete",
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            setState(() {
+              _exercisePersonal.remove(exercisePersonal);
+            });
+          },
+        ),
+        IconSlideAction(
+          caption: "Edit",
+          color: Colors.grey,
+          icon: Icons.edit,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Text("Cooming Soon"),
+            ));
+          },
+        )
+      ],
+      child: ListTile(
+        title: Text(exercisePersonal),
+      ),
+    );
   }
 
   void _addExercise() {

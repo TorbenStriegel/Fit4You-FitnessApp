@@ -29,7 +29,6 @@ class _SecondPageState extends State<SecondPage> {
     "Dumbbell Pullover",
     "Shoulder Press",
     "Bench Press",
-    "Bench Press",
     "Biceps Curl",
     "Clean and Jerk",
   ];
