@@ -1,7 +1,8 @@
+import 'package:fit4you/exercise.dart';
 import 'package:flutter/cupertino.dart';
 
 class Configuration extends InheritedWidget {
-  final List<String> exercisePersonal;
+  final Future<List<Exercise>> exercisePersonal;
 
   Configuration({
     required this.exercisePersonal,

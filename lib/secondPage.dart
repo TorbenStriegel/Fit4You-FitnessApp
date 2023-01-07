@@ -1,4 +1,5 @@
-import 'package:fit4you/config.dart';
+import 'package:fit4you/databaseHelper.dart';
+import 'package:fit4you/exercise.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -102,21 +103,37 @@ class _SecondPageState extends State<SecondPage> {
                   ),
                 ],
               ),
-              Flexible(child: _buildListToAddExercises())
+              Flexible(
+                  child: FutureBuilder<List<Exercise>>(
+                      future: DatabaseHelper.instance.getExercises(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Exercise>> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: Text("Loading..."),
+                          );
+                        }
+                        return snapshot.data!.isEmpty
+                            ? Center(
+                                child: Text("No exercises selected"),
+                              )
+                            : _buildListToAddExercises(snapshot.data!);
+                      }))
             ],
           ),
         ));
   }
 
-  Widget _buildListToAddExercises() {
-    final _exercisePersonal = context
-        .dependOnInheritedWidgetOfExactType<Configuration>()!
-        .exercisePersonal;
+  Widget _buildListToAddExercises(List<Exercise> _exercisePersonal) {
+    List<String> _exercisePersonalNames = [];
+    for (Exercise exercise in _exercisePersonal) {
+      _exercisePersonalNames.add(exercise.name);
+    }
     List<String> _exerciseAllCopy = [..._exerciseAll];
     showCheckedExercises
         ? null
         : _exerciseAllCopy
-            .removeWhere((item) => _exercisePersonal.contains(item));
+            .removeWhere((item) => _exercisePersonalNames.contains(item));
     if (query != "") {
       _exerciseAllCopy.removeWhere(
           (exercise) => !exercise.toLowerCase().contains(query.toLowerCase()));
@@ -128,29 +145,27 @@ class _SecondPageState extends State<SecondPage> {
         if (i.isOdd) {
           return Divider();
         }
-        return _buildRowToAddExercises(_exerciseAllCopy[i ~/ 2]);
+        return _buildRowToAddExercises(
+            _exerciseAllCopy[i ~/ 2], _exercisePersonalNames);
       },
     );
   }
 
   Widget _checkbox(bool isInPersonalExerciseList, String exercise) {
-    final _exercisePersonal = context
-        .dependOnInheritedWidgetOfExactType<Configuration>()!
-        .exercisePersonal;
     return Checkbox(
         value: isInPersonalExerciseList,
         onChanged: (value) {
           value = isInPersonalExerciseList;
           setState(() {
             if (isInPersonalExerciseList) {
-              _exercisePersonal.remove(exercise);
+              DatabaseHelper.instance.removeName(exercise);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 duration: const Duration(seconds: 1),
                 content:
                     Text("removed " + exercise + " from your training plan"),
               ));
             } else {
-              _exercisePersonal.add(exercise);
+              DatabaseHelper.instance.add(new Exercise(name: exercise));
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 duration: const Duration(seconds: 1),
                 content: Text("added " + exercise + " to your training plan"),
@@ -160,11 +175,9 @@ class _SecondPageState extends State<SecondPage> {
         });
   }
 
-  Widget _buildRowToAddExercises(String exercise) {
-    final _exercisePersonal = context
-        .dependOnInheritedWidgetOfExactType<Configuration>()!
-        .exercisePersonal;
-    bool isInPersonalExerciseList = _exercisePersonal.contains(exercise);
+  Widget _buildRowToAddExercises(
+      String exercise, List<String> _exercisePersonalNames) {
+    bool isInPersonalExerciseList = _exercisePersonalNames.contains(exercise);
     return ListTile(
       title: Text(exercise),
       trailing: _checkbox(isInPersonalExerciseList, exercise),
@@ -175,15 +188,15 @@ class _SecondPageState extends State<SecondPage> {
               duration: const Duration(seconds: 1),
               content: Text("removed " + exercise + " from your training plan"),
             ));
-            _exercisePersonal.remove(exercise);
             _checkbox(false, exercise);
+            DatabaseHelper.instance.removeName(exercise);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               duration: const Duration(seconds: 1),
               content: Text("added " + exercise + " to your training plan"),
             ));
-            _exercisePersonal.add(exercise);
             _checkbox(true, exercise);
+            DatabaseHelper.instance.add(new Exercise(name: exercise));
           }
         });
       },

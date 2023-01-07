@@ -1,4 +1,6 @@
 import 'package:fit4you/config.dart';
+import 'package:fit4you/databaseHelper.dart';
+import 'package:fit4you/exercise.dart';
 import 'package:fit4you/secondPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Configuration(
-      exercisePersonal: [],
+      exercisePersonal: DatabaseHelper.instance.getExercises(),
       child: MaterialApp(
           title: 'Fit4You',
           theme: ThemeData(
@@ -108,30 +110,30 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     final _exercisePersonal = context
         .dependOnInheritedWidgetOfExactType<Configuration>()!
         .exercisePersonal;
-    return ListView.builder(
-      itemCount: _exercisePersonal.length * 2,
-      padding: EdgeInsets.all(16),
-      itemBuilder: (context, i) {
-        if (i.isOdd) {
-          return Divider();
-        }
-        return _buildRowPersonalExercises(_exercisePersonal[i ~/ 2]);
-      },
-    );
+    return FutureBuilder<List<Exercise>>(
+        future: DatabaseHelper.instance.getExercises(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: Text("Loading..."),
+            );
+          }
+          return snapshot.data!.isEmpty
+              ? Center(
+                  child: Text("No exercises selected"),
+                )
+              : ListView(
+                  children: snapshot.data!.map(
+                    (item) {
+                      return _buildRowPersonalExercises(item);
+                    },
+                  ).toList(),
+                );
+        });
   }
 
-  Widget _buildRowPersonalExercises(String exercisePersonal) {
-    /*return ListTile(
-        title: Text(exercisePersonal),
-        onLongPress: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(seconds: 1),
-            content: Text("Cooming Soon"),
-          ));
-        });*/
-    final _exercisePersonal = context
-        .dependOnInheritedWidgetOfExactType<Configuration>()!
-        .exercisePersonal;
+  Widget _buildRowPersonalExercises(Exercise exercise) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       secondaryActions: [
@@ -141,7 +143,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           icon: Icons.delete,
           onTap: () {
             setState(() {
-              _exercisePersonal.remove(exercisePersonal);
+              DatabaseHelper.instance.remove(exercise.id!);
             });
           },
         ),
@@ -158,7 +160,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
         )
       ],
       child: ListTile(
-        title: Text(exercisePersonal),
+        title: Text(exercise.name),
       ),
     );
   }

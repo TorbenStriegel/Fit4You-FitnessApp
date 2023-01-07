@@ -1,35 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:fit4you/exercise.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
-class Exercise {
-  final int? id;
-  final String name;
-
-  Exercise({this.id,  required this.name});
-
-  factory Exercise.fromMap(Map<String, dynamic> json) => new Exercise(
-    id: json ['id'],
-    name: json['name'],
-
-  );
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id':id,
-      'name':name,
-    };
-  }
-}
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   DatabaseHelper._privateConstructor();
+
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database? _database;
+
   Future<Database> get database async => _database ??= await _initDatabase();
 
   Future<Database> _initDatabase() async {
@@ -41,6 +23,7 @@ class DatabaseHelper {
       onCreate: _onCreate,
     );
   }
+
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE exercises(
@@ -57,5 +40,20 @@ class DatabaseHelper {
         ? exercises.map((c) => Exercise.fromMap(c)).toList()
         : [];
     return exerciseList;
+  }
+
+  Future<int> add(Exercise item) async {
+    Database db = await instance.database;
+    return await db.insert("exercises", item.toMap());
+  }
+
+  Future<int> remove(int id) async {
+    Database db = await instance.database;
+    return await db.delete("exercises", where: "id = ?", whereArgs: [id]);
+  }
+
+  Future<int> removeName(String name) async {
+    Database db = await instance.database;
+    return await db.delete("exercises", where: "name = ?", whereArgs: [name]);
   }
 }
