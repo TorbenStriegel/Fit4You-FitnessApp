@@ -56,4 +56,27 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.delete("exercises", where: "name = ?", whereArgs: [name]);
   }
+
+  static List<String> exerciseAll() {
+    return
+      <String>[
+        "Lunges",
+        "Squats",
+        "Crunches",
+        "Pushups",
+        "Mountain Climbers",
+        "Squat",
+        "Burpee",
+        "Deadlifts",
+        "Sit-Ups",
+        "Shrugs",
+        "Side planks",
+        "Hip Thrusts",
+        "Dumbbell Pullover",
+        "Shoulder Press",
+        "Bench Press",
+        "Biceps Curl",
+        "Clean and Jerk",
+      ];
+  }
 }

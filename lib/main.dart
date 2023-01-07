@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fit4you/config.dart';
 import 'package:fit4you/databaseHelper.dart';
 import 'package:fit4you/exercise.dart';
@@ -121,7 +123,27 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           }
           return snapshot.data!.isEmpty
               ? Center(
-                  child: Text("No exercises selected"),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("No exercises selected"),
+                        OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              _createRandomTrainingPlan();
+                            });
+                          },
+                          style: ButtonStyle(
+                              side: MaterialStateProperty.all(
+                                  BorderSide(width: 1.5, color: Colors.blue)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                              )),
+                          child: Text(
+                              textScaleFactor: 1.2, "create training plan"),
+                        )
+                      ]),
                 )
               : ListView(
                   children: snapshot.data!.map(
@@ -169,5 +191,15 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     Navigator.push(
             context, MaterialPageRoute(builder: (context) => SecondPage()))
         .then((value) => setState(() {}));
+  }
+
+  void _createRandomTrainingPlan() {
+    Random random = new Random();
+    int randomNumber = random.nextInt(5) + 1;
+    for (int i = 0; i <= randomNumber; ++i) {
+      Exercise randomItem = new Exercise(
+          name: (DatabaseHelper.exerciseAll().toList()..shuffle()).first);
+      DatabaseHelper.instance.add(randomItem);
+    }
   }
 }

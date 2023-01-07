@@ -113,11 +113,7 @@ class _SecondPageState extends State<SecondPage> {
                             child: Text("Loading..."),
                           );
                         }
-                        return snapshot.data!.isEmpty
-                            ? Center(
-                                child: Text("No exercises selected"),
-                              )
-                            : _buildListToAddExercises(snapshot.data!);
+                        return _buildListToAddExercises(snapshot.data!);
                       }))
             ],
           ),
