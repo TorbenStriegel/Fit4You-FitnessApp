@@ -48,12 +48,7 @@ class _AppBar extends StatelessWidget {
             icon: Icon(Icons.person_pin),
           ),
           IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                duration: const Duration(seconds: 1),
-                content: Text("Cooming Soon"),
-              ));
-            },
+            onPressed: () {},
             icon: Icon(Icons.accessibility),
           ),
           IconButton(
