@@ -8,11 +8,13 @@ import 'package:fit4you/secondPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+//Class to display the home page
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
+//Create the basic app and load all the required data.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//Create the App Bar that will be displayed at the bottom of the app.
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -55,10 +58,8 @@ class _AppBar extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()))
-              ;
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()));
             },
             icon: Icon(Icons.person),
           ),
@@ -68,12 +69,14 @@ class _AppBar extends StatelessWidget {
   }
 }
 
+//Creating the widget which will attract dynamic content on the page
 class firstPageExerciseGenerator extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ExerciseName();
 }
 
 class _ExerciseName extends State<firstPageExerciseGenerator> {
+  //Create the different states that will be used on the page.
   bool isChecked = false;
 
   @override
@@ -144,35 +147,35 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           }
           return snapshot.data!.isEmpty
               ? Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("No exercises selected"),
-                  OutlinedButton(
-                    onPressed: () {
-                      setState(() {
-                        _createRandomTrainingPlan();
-                      });
-                    },
-                    style: ButtonStyle(
-                        side: MaterialStateProperty.all(
-                            BorderSide(width: 1.5, color: Colors.blue)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                        )),
-                    child: Text(
-                        textScaleFactor: 1.2, "create training plan"),
-                  )
-                ]),
-          )
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("No exercises selected"),
+                        OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              _createRandomTrainingPlan();
+                            });
+                          },
+                          style: ButtonStyle(
+                              side: MaterialStateProperty.all(
+                                  BorderSide(width: 1.5, color: Colors.blue)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                              )),
+                          child: Text(
+                              textScaleFactor: 1.2, "create training plan"),
+                        )
+                      ]),
+                )
               : ListView(
-            children: snapshot.data!.map(
-                  (item) {
-                return _buildRowPersonalExercises(item);
-              },
-            ).toList(),
-          );
+                  children: snapshot.data!.map(
+                    (item) {
+                      return _buildRowPersonalExercises(item);
+                    },
+                  ).toList(),
+                );
         });
   }
 
@@ -210,7 +213,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
 
   void _addExercise() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SecondPage()))
+            context, MaterialPageRoute(builder: (context) => SecondPage()))
         .then((value) => setState(() {}));
   }
 
@@ -219,8 +222,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     int randomNumber = random.nextInt(5) + 1;
     for (int i = 0; i <= randomNumber; ++i) {
       Exercise randomItem = new Exercise(
-          name: (DatabaseHelper.exerciseAll().toList()
-            ..shuffle()).first);
+          name: (DatabaseHelper.exerciseAll().toList()..shuffle()).first);
       DatabaseHelper.instance.add(randomItem);
     }
   }

@@ -3,6 +3,7 @@ import 'package:fit4you/exercise.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//Class to view the page where you can edit the exercises.
 class SecondPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,6 +12,7 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
+  //Create the different states that will be used on the page.
   bool showCheckedExercises = true;
   String query = "";
   bool sortABC = false;

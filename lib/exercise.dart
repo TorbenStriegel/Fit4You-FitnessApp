@@ -1,5 +1,6 @@
 import 'dart:math';
 
+//Class for saving the data from the exercises
 class Exercise {
   final int? id;
   final String name;
@@ -8,7 +9,8 @@ class Exercise {
 
   Exercise({this.id, required this.name});
 
-  factory Exercise.fromMap(Map<String, dynamic> json) => new Exercise(
+  factory Exercise.fromMap(Map<String, dynamic> json) =>
+      new Exercise(
         id: json['id'],
         name: json['name'],
       );

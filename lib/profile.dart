@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+//Class to display the profile page
 class ProfilePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,6 +12,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  //Create the different states that will be used on the page.
   List<_CaloriesData> data = [
     _CaloriesData('Jan', 10324),
     _CaloriesData('Feb', 7384),
