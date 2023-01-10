@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fit4you/config.dart';
 import 'package:fit4you/databaseHelper.dart';
 import 'package:fit4you/exercise.dart';
+import 'package:fit4you/profile.dart';
 import 'package:fit4you/secondPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -54,10 +55,10 @@ class _AppBar extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                duration: const Duration(seconds: 1),
-                content: Text("Cooming Soon"),
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()))
+              ;
             },
             icon: Icon(Icons.person),
           ),
@@ -143,35 +144,35 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           }
           return snapshot.data!.isEmpty
               ? Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("No exercises selected"),
-                        OutlinedButton(
-                          onPressed: () {
-                            setState(() {
-                              _createRandomTrainingPlan();
-                            });
-                          },
-                          style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                  BorderSide(width: 1.5, color: Colors.blue)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
-                              )),
-                          child: Text(
-                              textScaleFactor: 1.2, "create training plan"),
-                        )
-                      ]),
-                )
-              : ListView(
-                  children: snapshot.data!.map(
-                    (item) {
-                      return _buildRowPersonalExercises(item);
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("No exercises selected"),
+                  OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        _createRandomTrainingPlan();
+                      });
                     },
-                  ).toList(),
-                );
+                    style: ButtonStyle(
+                        side: MaterialStateProperty.all(
+                            BorderSide(width: 1.5, color: Colors.blue)),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                        )),
+                    child: Text(
+                        textScaleFactor: 1.2, "create training plan"),
+                  )
+                ]),
+          )
+              : ListView(
+            children: snapshot.data!.map(
+                  (item) {
+                return _buildRowPersonalExercises(item);
+              },
+            ).toList(),
+          );
         });
   }
 
@@ -209,7 +210,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
 
   void _addExercise() {
     Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SecondPage()))
+        context, MaterialPageRoute(builder: (context) => SecondPage()))
         .then((value) => setState(() {}));
   }
 
@@ -218,7 +219,8 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     int randomNumber = random.nextInt(5) + 1;
     for (int i = 0; i <= randomNumber; ++i) {
       Exercise randomItem = new Exercise(
-          name: (DatabaseHelper.exerciseAll().toList()..shuffle()).first);
+          name: (DatabaseHelper.exerciseAll().toList()
+            ..shuffle()).first);
       DatabaseHelper.instance.add(randomItem);
     }
   }
