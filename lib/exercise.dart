@@ -1,8 +1,10 @@
-
+import 'dart:math';
 
 class Exercise {
   final int? id;
   final String name;
+  int difficulty = Random().nextInt(100) + 10;
+  int repetitions = Random().nextInt(20) + 6;
 
   Exercise({this.id, required this.name});
 
@@ -15,6 +17,8 @@ class Exercise {
     return {
       'id': id,
       'name': name,
+      'difficulty': difficulty!,
+      'repetitions': repetitions!,
     };
   }
 }

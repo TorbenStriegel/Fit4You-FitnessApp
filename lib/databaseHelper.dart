@@ -28,7 +28,9 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE exercises(
           id INTEGER PRIMARY KEY,
-          name TEXT
+          name TEXT,
+          difficulty INTEGER,
+          repetitions INTEGER
       )
       ''');
   }
