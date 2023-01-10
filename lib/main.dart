@@ -88,18 +88,38 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
           children: [
             Text(textScaleFactor: 1.8, "Your training plan"),
             Flexible(child: _buildPersonalExercisesList()),
-            OutlinedButton(
-              onPressed: () {
-                _addExercise();
-              },
-              style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                      BorderSide(width: 1.5, color: Colors.blue)),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                  )),
-              child: Text(textScaleFactor: 1.2, "edit exercises"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    _addExercise();
+                  },
+                  style: ButtonStyle(
+                      side: MaterialStateProperty.all(
+                          BorderSide(width: 1.5, color: Colors.blue)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                      )),
+                  child: Text(textScaleFactor: 1.2, "edit exercises"),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    setState(() {
+                      DatabaseHelper.instance.removeAll();
+                    });
+                  },
+                  style: ButtonStyle(
+                      side: MaterialStateProperty.all(
+                          BorderSide(width: 1.5, color: Colors.blue)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                      )),
+                  child: Text(textScaleFactor: 1.2, "remove all exercises"),
+                ),
+              ],
             ),
           ],
         ),

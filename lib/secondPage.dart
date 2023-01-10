@@ -14,25 +14,7 @@ class _SecondPageState extends State<SecondPage> {
   bool showCheckedExercises = true;
   String query = "";
   bool sortABC = false;
-  List<String> _exerciseAll = <String>[
-    "Lunges",
-    "Squats",
-    "Crunches",
-    "Pushups",
-    "Mountain Climbers",
-    "Squat",
-    "Burpee",
-    "Deadlifts",
-    "Sit-Ups",
-    "Shrugs",
-    "Side planks",
-    "Hip Thrusts",
-    "Dumbbell Pullover",
-    "Shoulder Press",
-    "Bench Press",
-    "Biceps Curl",
-    "Clean and Jerk",
-  ];
+  List<String> _exerciseAll = DatabaseHelper.exerciseAll();
   bool isChecked = false;
 
   @override
@@ -83,7 +65,7 @@ class _SecondPageState extends State<SecondPage> {
                           : Icons.check_box_outline_blank,
                       size: 24.0,
                     ),
-                    label: Text('Checked Exercises'),
+                    label: Text('All Exercises'),
                   ),
                   IconButton(
                     onPressed: () {
