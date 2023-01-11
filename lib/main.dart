@@ -70,8 +70,9 @@ class firstPageExerciseGenerator extends StatefulWidget {
   State<StatefulWidget> createState() => _ExerciseName();
 }
 
+
 class _ExerciseName extends State<firstPageExerciseGenerator> {
-  //Create the different states that will be used on the page.
+//Create the different states that will be used on the page.
   bool isChecked = false;
 
   @override
@@ -126,11 +127,8 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
       bottomNavigationBar: _AppBar(),
     );
   }
-
+  //FutureBuilder
   Widget _buildPersonalExercisesList() {
-    final _exercisePersonal = context
-        .dependOnInheritedWidgetOfExactType<Configuration>()!
-        .exercisePersonal;
     return FutureBuilder<List<Exercise>>(
         future: DatabaseHelper.instance.getExercises(),
         builder:
