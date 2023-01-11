@@ -2,19 +2,19 @@ import 'dart:math';
 
 import 'package:fit4you/config.dart';
 import 'package:fit4you/databaseHelper.dart';
+import 'package:fit4you/editExercisePage.dart';
 import 'package:fit4you/exercise.dart';
-import 'package:fit4you/profile.dart';
-import 'package:fit4you/secondPage.dart';
+import 'package:fit4you/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-//Class to display the home page
+// Class to display the home page
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-//Create the basic app and load all the required data.
+// Create the basic app and load all the required data.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Create the App Bar that will be displayed at the bottom of the app.
+// Create the App Bar that will be displayed at the bottom of the app.
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,15 +64,14 @@ class _AppBar extends StatelessWidget {
   }
 }
 
-//Creating the widget which will attract dynamic content on the page
+// Creating the widget which will attract dynamic content on the page
 class firstPageExerciseGenerator extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ExerciseName();
 }
 
-
 class _ExerciseName extends State<firstPageExerciseGenerator> {
-//Create the different states that will be used on the page.
+  // Create the different states that will be used on the page.
   bool isChecked = false;
 
   @override
@@ -127,7 +126,8 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
       bottomNavigationBar: _AppBar(),
     );
   }
-  //FutureBuilder
+
+  // FutureBuilder which fetches the data from the SQlite database and builds the PersonalExercisesList.
   Widget _buildPersonalExercisesList() {
     return FutureBuilder<List<Exercise>>(
         future: DatabaseHelper.instance.getExercises(),
@@ -172,6 +172,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
         });
   }
 
+  // Widget that represents the individual rows in the list.
   Widget _buildRowPersonalExercises(Exercise exercise) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
@@ -210,12 +211,14 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     );
   }
 
+  // Switching the pages to the Second Page
   void _addExercise() {
     Navigator.push(
             context, MaterialPageRoute(builder: (context) => SecondPage()))
         .then((value) => setState(() {}));
   }
 
+  // Create a new training plan
   void _createRandomTrainingPlan() {
     Random random = new Random();
     int randomNumber = random.nextInt(5) + 1;

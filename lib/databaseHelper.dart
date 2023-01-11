@@ -37,6 +37,7 @@ class DatabaseHelper {
       )
       ''');
   }
+
   // Method that returns all Exercises within the database table exercises
   Future<List<Exercise>> getExercises() async {
     Database db = await instance.database;
@@ -46,27 +47,32 @@ class DatabaseHelper {
         : [];
     return exerciseList;
   }
+
   // Method to insert an Exercise to the database table exercises
   Future<int> add(Exercise item) async {
     Database db = await instance.database;
     return await db.insert("exercises", item.toMap());
   }
+
   // Method to remove an exercise from the database table exercises by id
   Future<int> remove(int id) async {
     Database db = await instance.database;
     return await db.delete("exercises", where: "id = ?", whereArgs: [id]);
   }
+
   // Method to remove an exercise from the database table exercises by name
   Future<int> removeName(String name) async {
     Database db = await instance.database;
     return await db.delete("exercises", where: "name = ?", whereArgs: [name]);
   }
+
   // Method to remove all exercises from the database table exercises
   Future<int> removeAll() async {
     Database db = await instance.database;
     return await db.delete("exercises");
   }
-  // mockup of all selectable excercises
+
+  // Mockup of all selectable excercises
   static List<String> exerciseAll() {
     return <String>[
       "Lunges",

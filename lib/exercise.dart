@@ -7,10 +7,10 @@ class Exercise {
   int difficulty = Random().nextInt(100) + 10;
   int repetitions = Random().nextInt(20) + 6;
 
+  // Constructor
   Exercise({this.id, required this.name});
 
-  factory Exercise.fromMap(Map<String, dynamic> json) =>
-      new Exercise(
+  factory Exercise.fromMap(Map<String, dynamic> json) => new Exercise(
         id: json['id'],
         name: json['name'],
       );

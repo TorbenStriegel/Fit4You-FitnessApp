@@ -104,6 +104,7 @@ class _SecondPageState extends State<SecondPage> {
         ));
   }
 
+  // Builder which builds the ListToAddExercises.
   Widget _buildListToAddExercises(List<Exercise> _exercisePersonal) {
     List<String> _exercisePersonalNames = [];
     for (Exercise exercise in _exercisePersonal) {
@@ -131,6 +132,7 @@ class _SecondPageState extends State<SecondPage> {
     );
   }
 
+  // Widget that represents the checkboxes in the list.
   Widget _checkbox(bool isInPersonalExerciseList, String exercise) {
     return Checkbox(
         value: isInPersonalExerciseList,
@@ -155,6 +157,7 @@ class _SecondPageState extends State<SecondPage> {
         });
   }
 
+  // Widget that represents the individual rows in the list.
   Widget _buildRowToAddExercises(
       String exercise, List<String> _exercisePersonalNames) {
     bool isInPersonalExerciseList = _exercisePersonalNames.contains(exercise);

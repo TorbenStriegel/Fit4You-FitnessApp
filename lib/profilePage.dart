@@ -81,6 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
+// Class for saving the data.
 class _CaloriesData {
   _CaloriesData(this.year, this.calories);
 
