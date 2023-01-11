@@ -211,10 +211,10 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     );
   }
 
-  // Switching the pages to the Second Page
+  // Switching the pages to the EditExercises Page
   void _addExercise() {
-    Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SecondPage()))
+    Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EditExercisesPage()))
         .then((value) => setState(() {}));
   }
 

@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //Class to view the page where you can edit the exercises.
-class SecondPage extends StatefulWidget {
+class EditExercisesPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SecondPageState();
+    return _EditExercisesState();
   }
 }
 
-class _SecondPageState extends State<SecondPage> {
+class _EditExercisesState extends State<EditExercisesPage> {
   //Create the different states that will be used on the page.
   bool showCheckedExercises = true;
   String query = "";
