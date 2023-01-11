@@ -202,6 +202,12 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
       ],
       child: ListTile(
         title: Text(exercise.name),
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 1),
+            content: Text("Swipe left"),
+          ));
+        },
       ),
     );
   }
