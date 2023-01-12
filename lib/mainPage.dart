@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Create the App Bar that will be displayed at the bottom of the app.
+// Create the BottomAppBar that will be displayed at the bottom of the app.
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -211,7 +211,7 @@ class _ExerciseName extends State<firstPageExerciseGenerator> {
     );
   }
 
-  // Switching the pages to the EditExercises Page
+  // Switching to the EditExercises Page
   void _addExercise() {
     Navigator.push(context,
             MaterialPageRoute(builder: (context) => EditExercisesPage()))

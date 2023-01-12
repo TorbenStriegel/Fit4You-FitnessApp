@@ -89,7 +89,7 @@ class _CaloriesData {
   final double calories;
 }
 
-//Create the App Bar that will be displayed at the bottom of the app.
+//Create the BottomAppBar that will be displayed at the bottom of the app.
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
