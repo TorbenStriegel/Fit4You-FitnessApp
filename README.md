@@ -3,6 +3,9 @@
 ## Project Overview
 Fit4You-FitnessApp is a fitness app designed to create personalized workout plans for athletes. It was developed as part of a student project using the Flutter framework.
 
+![image](https://github.com/TorbenStriegel/Fit4You-FitnessApp/assets/29056807/cd59a3b6-dd19-42ff-8a3f-1f4c9ab4644e)
+![image](https://github.com/TorbenStriegel/Fit4You-FitnessApp/assets/29056807/1cbcc1f8-69bf-40f5-8719-496d1225fdc8)
+
 An overview of the currently implemented features can be found [here](https://github.com/TorbenStriegel/Fit4You-FitnessApp/files/12642982/Implemented.features.pdf).
 
 ## Getting Started with Flutter and Android Studio
